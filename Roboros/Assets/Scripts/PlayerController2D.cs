@@ -39,12 +39,15 @@ public class PlayerController2D : MonoBehaviour
             if (currState != state.ONE_ARM || (frameMove <= frameCount && currState == state.ONE_ARM)) {
                 player.velocity = new Vector2(runSpeed, player.velocity.y);
             }
+            Speed.instance.speed = 1f;
             spriteRenderer.flipX = false;
         } else if (Input.GetAxisRaw("Horizontal") < 0) {
             if ((frameMove <= frameCount && currState == state.ONE_ARM) || currState != state.ONE_ARM)
             player.velocity = new Vector2(-(int)runSpeed, player.velocity.y);
+            Speed.instance.speed = -1f;
             spriteRenderer.flipX = true;
         } else {
+            Speed.instance.speed = 0f;
             player.velocity = new Vector2(0, player.velocity.y);
         }
 
