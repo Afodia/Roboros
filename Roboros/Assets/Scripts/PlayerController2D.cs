@@ -22,8 +22,6 @@ public class PlayerController2D : MonoBehaviour
     private state currState;
 
     [SerializeField] Transform groundCheck = null;
-    [SerializeField] Transform groundCheckLeft = null;
-    [SerializeField] Transform groundCheckRight = null;
 
     [SerializeField] float jumpForce = 5;
 
@@ -55,9 +53,7 @@ public class PlayerController2D : MonoBehaviour
 
     void CheckJump()
     {
-        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, groundCheckLeft.position, 1 << LayerMask.NameToLayer("Ground")) ||
-            Physics2D.Linecast(transform.position, groundCheckRight.position, 1 << LayerMask.NameToLayer("Ground")) &&
+        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) &&
             currState == state.HUMAN) {
             jump = false;
             //            anim.SetBool("isJumping", false);
