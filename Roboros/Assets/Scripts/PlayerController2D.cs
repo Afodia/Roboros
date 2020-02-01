@@ -63,7 +63,7 @@ public class PlayerController2D : MonoBehaviour
             //            anim.SetBool("isJumping", false);
         }
 
-        if (Input.GetAxisRaw("Jump") > 0 && !jump) {
+        if (Input.GetAxisRaw("Jump") > 0 && !jump && currState == state.HUMAN) {
             player.velocity = new Vector2(player.velocity.x, jumpForce);
             jump = true;
         }
