@@ -4,56 +4,79 @@ using UnityEngine;
 
 public class PlayerController2D : MonoBehaviour
 {
-    Rigidbody2D rg2d;
-    Animator animator;
-    SpriteRenderer spriteRenderer;
-    bool isGrounded = false;
+    private Rigidbody2D player;
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
+    private bool jump = false;
+    private int runSpeed;
+    private static int frameMove = 25;
+    private static int frameCount = 0;
+
+    public enum state
+    {
+        ONE_ARM = 2,
+        TWO_ARMS = 4,
+        HUMAN = 6
+    };
+
+    private state currState;
 
     [SerializeField] Transform groundCheck = null;
+    [SerializeField] Transform groundCheckLeft = null;
+    [SerializeField] Transform groundCheckRight = null;
 
-    [SerializeField] float runSpeed = 4;
     [SerializeField] float jumpForce = 5;
 
-    private void Awake()
+    private void Start()
     {
-        rg2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        player = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        currState = state.ONE_ARM;
+        runSpeed = (int)currState;
     }
 
-/*    private void Update()
+    void Move()
     {
-        animator.SetBool("isGrounded", isGrounded);
-        if (rg2d.velocity.x > 0.01 || rg2d.velocity.x < -0.01)
-            animator.SetBool("isRunning", true);
-        else
-            animator.SetBool("isRunning", false);
-        animator.SetBool("isJumping", rg2d.velocity.y > 0);
-        animator.SetBool("isFalling", rg2d.velocity.y < 0);
+        if (Input.GetAxisRaw("Horizontal") > 0) {
+            if (currState != state.ONE_ARM || (frameMove <= frameCount && currState == state.ONE_ARM)) {
+                player.velocity = new Vector2(runSpeed, player.velocity.y);
+            }
+            spriteRenderer.flipX = false;
+        } else if (Input.GetAxisRaw("Horizontal") < 0) {
+            if ((frameMove <= frameCount && currState == state.ONE_ARM) || currState != state.ONE_ARM)
+            player.velocity = new Vector2(-(int)runSpeed, player.velocity.y);
+            spriteRenderer.flipX = true;
+        } else {
+            player.velocity = new Vector2(0, player.velocity.y);
+        }
+
     }
-    */
+
+    void CheckJump()
+    {
+        if (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, groundCheckLeft.position, 1 << LayerMask.NameToLayer("Ground")) ||
+            Physics2D.Linecast(transform.position, groundCheckRight.position, 1 << LayerMask.NameToLayer("Ground")) &&
+            currState == state.HUMAN) {
+            jump = false;
+            //            anim.SetBool("isJumping", false);
+        }
+
+        if (Input.GetAxisRaw("Jump") > 0 && !jump) {
+            player.velocity = new Vector2(player.velocity.x, jumpForce);
+            jump = true;
+        }
+    }
+
     void FixedUpdate()
     {
-        isGrounded = (Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")));
+        frameCount += 1;
 
-        if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            rg2d.velocity = new Vector2(runSpeed, rg2d.velocity.y);
-            spriteRenderer.flipX = false;
-        }
-        else if (Input.GetAxisRaw("Horizontal") < 0)
-        {
-            rg2d.velocity = new Vector2(-runSpeed, rg2d.velocity.y);
-            spriteRenderer.flipX = true;
-        }
-        else
-        {
-            rg2d.velocity = new Vector2(0, rg2d.velocity.y);
-        }
+        CheckJump();
+        Move();
 
-        if (Input.GetAxisRaw("Jump") > 0)
-        {
-            rg2d.velocity = new Vector2(rg2d.velocity.x, jumpForce);
-        }
+        if (frameCount == 48)
+            frameCount = 0;
     }
 }
