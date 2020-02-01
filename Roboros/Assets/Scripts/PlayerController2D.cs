@@ -19,7 +19,7 @@ public class PlayerController2D : MonoBehaviour
         HUMAN = 6
     };
 
-    private state currState;
+    [SerializeField] state currState;
 
     [SerializeField] Transform groundCheck = null;
 
@@ -30,7 +30,6 @@ public class PlayerController2D : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        currState = state.ONE_ARM;
         runSpeed = (int)currState;
     }
 
