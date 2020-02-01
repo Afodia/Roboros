@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5054048095123239088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5054048095123239090}
+  - component: {fileID: 5054048095123239091}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5054048095123239090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054048095123239088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.019088, y: -1.7330614, z: -4.744238}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5054048095123239091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5054048095123239088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349ccea525539d745bd83a3fdf5f1ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: outsideWalk1
+    clip: {fileID: 8300000, guid: 6ec7ecc2b42f2d64f949208d0ed16f10, type: 3}
+    volume: 0.272
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: outsideWalk2
+    clip: {fileID: 8300000, guid: 95054ac7bd55c2b4c8e1747e91bfec18, type: 3}
+    volume: 0.272
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: insideWalk1
+    clip: {fileID: 8300000, guid: 4eed06857b708a347a2edf1ac3f7b14a, type: 3}
+    volume: 0.272
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: insideWalk2
+    clip: {fileID: 8300000, guid: 5415394601dcc8e48aaa7180921e3269, type: 3}
+    volume: 0.272
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: insideWind
+    clip: {fileID: 8300000, guid: 8da965972913ed74ea67ad6a406ecb57, type: 3}
+    volume: 0.272
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: outsideWind
+    clip: {fileID: 8300000, guid: 72c0fd79c1155d7448310649e404e64b, type: 3}
+    volume: 0.272
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: ambiantSound
+    clip: {fileID: 8300000, guid: f42676ecce386b546899411b202e41f6, type: 3}
+    volume: 0.272
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
+  - name: domeMusic
+    clip: {fileID: 8300000, guid: 6a978c1ddeeb4f445b3e063e59ef3a86, type: 3}
+    volume: 0.333
+    pitch: 0.1
+    loop: 0
+    source: {fileID: 0}
