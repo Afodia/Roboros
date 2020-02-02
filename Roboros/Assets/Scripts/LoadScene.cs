@@ -7,7 +7,6 @@ public class LoadScene : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("oufef");
             GameObject.Find("Player").GetComponent<PlayerController2D>().currState = PlayerController2D.state.TWO_ARMS;
         }
 }

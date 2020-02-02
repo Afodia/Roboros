@@ -6,11 +6,10 @@ public class PlayerController2D : MonoBehaviour
 {
     private Rigidbody2D player;
     private Animator anim;
+    public Animation lol;
     private SpriteRenderer spriteRenderer;
     private bool jump = false;
     private int runSpeed;
-    private static int frameMove = 25;
-    private static int frameCount = 0;
 
     public enum state
     {
@@ -31,9 +30,26 @@ public class PlayerController2D : MonoBehaviour
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         runSpeed = (int)currState;
+        lol = GetComponent<Animation>();
     }
 
     void Move()
+    {
+        if (Input.GetAxisRaw("Horizontal") > 0) {
+            player.velocity = new Vector2(runSpeed, player.velocity.y);
+            Speed.instance.speed = 1f;
+            spriteRenderer.flipX = false;
+        } else if (Input.GetAxisRaw("Horizontal") < 0) {
+            player.velocity = new Vector2(-(int)runSpeed, player.velocity.y);
+            Speed.instance.speed = -1f;
+            spriteRenderer.flipX = true;
+        } else {
+            Speed.instance.speed = 0f;
+            player.velocity = new Vector2(0, player.velocity.y);
+        }
+    }
+
+    void SetAnim()
     {
         if (currState == state.ONE_ARM)
         {
@@ -53,25 +69,13 @@ public class PlayerController2D : MonoBehaviour
             anim.SetBool("TWO", false);
             anim.SetBool("HUMAN", true);
         }
-        if (Input.GetAxisRaw("Horizontal") > 0) {
-            anim.SetBool("IsMoving", true);
-            if (currState != state.ONE_ARM || (frameMove <= frameCount && currState == state.ONE_ARM)) {
-                player.velocity = new Vector2(runSpeed, player.velocity.y);
-            }
-            Speed.instance.speed = 1f;
-            spriteRenderer.flipX = false;
-        } else if (Input.GetAxisRaw("Horizontal") < 0) {
-            anim.SetBool("IsMoving", true);
-            if ((frameMove <= frameCount && currState == state.ONE_ARM) || currState != state.ONE_ARM)
-            player.velocity = new Vector2(-(int)runSpeed, player.velocity.y);
-            Speed.instance.speed = -1f;
-            spriteRenderer.flipX = true;
-        } else {
-            anim.SetBool("IsMoving", false);
-            Speed.instance.speed = 0f;
-            player.velocity = new Vector2(0, player.velocity.y);
-        }
 
+        if (Input.GetAxisRaw("Horizontal") > 0)
+            anim.SetBool("IsMoving", true);
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+            anim.SetBool("IsMoving", true);
+        else
+            anim.SetBool("IsMoving", false);
     }
 
     void CheckJump()
@@ -90,12 +94,9 @@ public class PlayerController2D : MonoBehaviour
 
     void FixedUpdate()
     {
-        frameCount += 1;
-
         CheckJump();
-        Move();
-
-        if (frameCount == 48)
-            frameCount = 0;
+        SetAnim();
+        if (currState != state.ONE_ARM)
+            Move();
     }
 }
