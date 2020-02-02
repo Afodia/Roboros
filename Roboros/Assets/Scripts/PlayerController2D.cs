@@ -19,7 +19,7 @@ public class PlayerController2D : MonoBehaviour
         HUMAN = 6
     };
 
-    [SerializeField] state currState;
+    [SerializeField] public state currState;
 
     [SerializeField] Transform groundCheck = null;
 
@@ -35,18 +35,39 @@ public class PlayerController2D : MonoBehaviour
 
     void Move()
     {
+        if (currState == state.ONE_ARM)
+        {
+            anim.SetBool("ONE", true);
+            anim.SetBool("TWO", false);
+            anim.SetBool("HUMAN", false);
+        }
+        else if (currState == state.TWO_ARMS)
+        {
+            anim.SetBool("ONE", false);
+            anim.SetBool("TWO", true);
+            anim.SetBool("HUMAN", false);
+        }
+        else if (currState == state.HUMAN)
+        {
+            anim.SetBool("ONE", false);
+            anim.SetBool("TWO", false);
+            anim.SetBool("HUMAN", true);
+        }
         if (Input.GetAxisRaw("Horizontal") > 0) {
+            anim.SetBool("IsMoving", true);
             if (currState != state.ONE_ARM || (frameMove <= frameCount && currState == state.ONE_ARM)) {
                 player.velocity = new Vector2(runSpeed, player.velocity.y);
             }
             Speed.instance.speed = 1f;
             spriteRenderer.flipX = false;
         } else if (Input.GetAxisRaw("Horizontal") < 0) {
+            anim.SetBool("IsMoving", true);
             if ((frameMove <= frameCount && currState == state.ONE_ARM) || currState != state.ONE_ARM)
             player.velocity = new Vector2(-(int)runSpeed, player.velocity.y);
             Speed.instance.speed = -1f;
             spriteRenderer.flipX = true;
         } else {
+            anim.SetBool("IsMoving", false);
             Speed.instance.speed = 0f;
             player.velocity = new Vector2(0, player.velocity.y);
         }

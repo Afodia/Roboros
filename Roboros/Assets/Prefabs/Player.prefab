@@ -128,9 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 0}
-  groundCheckLeft: {fileID: 0}
-  groundCheckRight: {fileID: 0}
-  runSpeed: 4
   jumpForce: 5
 --- !u!50 &2456984502522334244
 Rigidbody2D:
@@ -163,7 +160,7 @@ Animator:
   m_GameObject: {fileID: 2456984502522334240}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1bd5ed1b8e5a6cc48869fb128f553014, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

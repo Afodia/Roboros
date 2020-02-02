@@ -5,11 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour
 {
-        void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
         {
-        Debug.Log("oufef");
-
-            SceneManager.LoadScene("LastScene");
-
+            Debug.Log("oufef");
+            GameObject.Find("Player").GetComponent<PlayerController2D>().currState = PlayerController2D.state.TWO_ARMS;
         }
 }
