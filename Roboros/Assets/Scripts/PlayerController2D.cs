@@ -31,13 +31,16 @@ public class PlayerController2D : MonoBehaviour
 
     void Move()
     {
+        int rand = Random.Range(1, 3);
         if (Input.GetAxisRaw("Horizontal") > 0) {
             player.velocity = new Vector2((int)currState, player.velocity.y);
             Speed.instance.speed = 1f;
+            FindObjectOfType<AudioManager>().Play("outsideWalk"+ rand);
             spriteRenderer.flipX = false;
         } else if (Input.GetAxisRaw("Horizontal") < 0) {
             player.velocity = new Vector2(-(int)currState, player.velocity.y);
             Speed.instance.speed = -1f;
+            FindObjectOfType<AudioManager>().Play("outsideWalk"+ rand);
             spriteRenderer.flipX = true;
         } else {
             Speed.instance.speed = 0f;
