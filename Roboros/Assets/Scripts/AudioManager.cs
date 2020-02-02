@@ -30,7 +30,6 @@ public class AudioManager : MonoBehaviour
     public void Play (string name) {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null) {
-            Debug.LogWarning("Sound: " + name + " not found");
             return;
         }
         s.source.Play();
@@ -39,7 +38,6 @@ public class AudioManager : MonoBehaviour
     public void Stop (string name) {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null) {
-            Debug.LogWarning("Sound: " + name + " not found");
             return;
         }
         if (s.source.isPlaying) {

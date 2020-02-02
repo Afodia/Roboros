@@ -8,11 +8,12 @@ public class PlayerController2D : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
     private bool jump = false;
+    private bool fall = false;
 
     public enum state
     {
         ONE_ARM = 3,
-        TWO_ARMS = 5,
+        TWO_ARMS = 4,
         HUMAN = 6
     };
 
@@ -29,21 +30,32 @@ public class PlayerController2D : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    void OnTriggerEnter2D(Collider2D coll)
+    {
+        if (coll.name == "floor")
+            fall = true;
+    }
+
     void Move()
     {
         int rand = Random.Range(1, 3);
-        if (Input.GetAxisRaw("Horizontal") > 0) {
+
+        /*if (currState == state.TWO_ARMS)
+        {
+            int rand = Random.Range(3, 5);
+        }*/
+
+        if (Input.GetAxisRaw("Horizontal") > 0 && !fall) {
             player.velocity = new Vector2((int)currState, player.velocity.y);
-            Speed.instance.speed = 1f;
+            SpeedP.instance.speed = currState == state.ONE_ARM ? 0.05f : 1f;
             FindObjectOfType<AudioManager>().Play("outsideWalk"+ rand);
             spriteRenderer.flipX = false;
-        } else if (Input.GetAxisRaw("Horizontal") < 0) {
-            player.velocity = new Vector2(-(int)currState, player.velocity.y);
-            Speed.instance.speed = -1f;
-            FindObjectOfType<AudioManager>().Play("outsideWalk"+ rand);
-            spriteRenderer.flipX = true;
+//        } else if (Input.GetAxisRaw("Horizontal") < 0) {
+  //          player.velocity = new Vector2(-(int)currState, player.velocity.y);
+    //        SpeedP.instance.speed = currState == state.ONE_ARM ? -0.05f : -1f;
+      //      FindObjectOfType<AudioManager>().Play("outsideWalk"+ rand);
+        //    spriteRenderer.flipX = true;
         } else {
-            Speed.instance.speed = 0f;
             player.velocity = new Vector2(0, player.velocity.y);
         }
     }
@@ -54,12 +66,14 @@ public class PlayerController2D : MonoBehaviour
         anim.SetBool("TWO", currState == state.TWO_ARMS ? true : false);
         anim.SetBool("HUMAN", currState == state.HUMAN ? true : false);
         
-        if (Input.GetAxisRaw("Horizontal") > 0)
+        SpeedP.instance.speed = 0f;
+        if (Input.GetAxisRaw("Horizontal") > 0 && !fall)
             anim.SetBool("IsMoving", true);
-        else if (Input.GetAxisRaw("Horizontal") < 0)
-            anim.SetBool("IsMoving", true);
-        else
+   //     else if (Input.GetAxisRaw("Horizontal") < 0)
+     //       anim.SetBool("IsMoving", true);
+        else {
             anim.SetBool("IsMoving", false);
+        }
     }
 
     void CheckJump()

@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SoundTrigger : MonoBehaviour
 {
-    public string name;
+    public string nameS;
     public string theme;
     
     void OnTriggerEnter2D(Collider2D collision) {
         FindObjectOfType<AudioManager>().Stop(theme);
-        FindObjectOfType<AudioManager>().Play(name);
+        FindObjectOfType<AudioManager>().Play(nameS);
     }
 
     void OnTriggerExit2D(Collider2D collision) {
-        FindObjectOfType<AudioManager>().Stop(name);
+        FindObjectOfType<AudioManager>().Stop(nameS);
         FindObjectOfType<AudioManager>().Play(theme);
     }
 }
