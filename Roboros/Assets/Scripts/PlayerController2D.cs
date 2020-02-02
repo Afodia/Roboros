@@ -6,19 +6,17 @@ public class PlayerController2D : MonoBehaviour
 {
     private Rigidbody2D player;
     private Animator anim;
-    public Animation lol;
     private SpriteRenderer spriteRenderer;
     private bool jump = false;
-    private int runSpeed;
 
     public enum state
     {
-        ONE_ARM = 2,
-        TWO_ARMS = 4,
+        ONE_ARM = 3,
+        TWO_ARMS = 5,
         HUMAN = 6
     };
 
-    [SerializeField] public state currState;
+    [SerializeField] public state currState = state.ONE_ARM;
 
     [SerializeField] Transform groundCheck = null;
 
@@ -29,18 +27,16 @@ public class PlayerController2D : MonoBehaviour
         player = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        runSpeed = (int)currState;
-        lol = GetComponent<Animation>();
     }
 
     void Move()
     {
         if (Input.GetAxisRaw("Horizontal") > 0) {
-            player.velocity = new Vector2(runSpeed, player.velocity.y);
+            player.velocity = new Vector2((int)currState, player.velocity.y);
             Speed.instance.speed = 1f;
             spriteRenderer.flipX = false;
         } else if (Input.GetAxisRaw("Horizontal") < 0) {
-            player.velocity = new Vector2(-(int)runSpeed, player.velocity.y);
+            player.velocity = new Vector2(-(int)currState, player.velocity.y);
             Speed.instance.speed = -1f;
             spriteRenderer.flipX = true;
         } else {
@@ -51,25 +47,10 @@ public class PlayerController2D : MonoBehaviour
 
     void SetAnim()
     {
-        if (currState == state.ONE_ARM)
-        {
-            anim.SetBool("ONE", true);
-            anim.SetBool("TWO", false);
-            anim.SetBool("HUMAN", false);
-        }
-        else if (currState == state.TWO_ARMS)
-        {
-            anim.SetBool("ONE", false);
-            anim.SetBool("TWO", true);
-            anim.SetBool("HUMAN", false);
-        }
-        else if (currState == state.HUMAN)
-        {
-            anim.SetBool("ONE", false);
-            anim.SetBool("TWO", false);
-            anim.SetBool("HUMAN", true);
-        }
-
+        anim.SetBool("ONE", currState == state.ONE_ARM ? true : false);
+        anim.SetBool("TWO", currState == state.TWO_ARMS ? true : false);
+        anim.SetBool("HUMAN", currState == state.HUMAN ? true : false);
+        
         if (Input.GetAxisRaw("Horizontal") > 0)
             anim.SetBool("IsMoving", true);
         else if (Input.GetAxisRaw("Horizontal") < 0)
