@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playCutscene : MonoBehaviour
 {
@@ -11,12 +12,15 @@ public class playCutscene : MonoBehaviour
     void Start()
     {
         videoPlayer.SetActive(false);
+        StartCoroutine(Coroutine());
     }
 
     // Update is called once per frame
-    void Update()
+    IEnumerator Coroutine()
     {
         videoPlayer.SetActive(true);
+        yield return new WaitForSeconds(23);
         Destroy(videoPlayer, stopVideo);
+        SceneManager.LoadScene("SampleScene");
     }
 }

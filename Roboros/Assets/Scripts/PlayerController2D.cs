@@ -39,16 +39,19 @@ public class PlayerController2D : MonoBehaviour
     void Move()
     {
         int rand = Random.Range(1, 3);
-
-        /*if (currState == state.TWO_ARMS)
+         
+        if (currState == state.TWO_ARMS)
         {
-            int rand = Random.Range(3, 5);
-        }*/
+            rand = Random.Range(3, 5);
+        }
 
         if (Input.GetAxisRaw("Horizontal") > 0 && !fall) {
             player.velocity = new Vector2((int)currState, player.velocity.y);
-            SpeedP.instance.speed = currState == state.ONE_ARM ? 0.05f : 1f;
-            FindObjectOfType<AudioManager>().Play("outsideWalk"+ rand);
+   //         SpeedP.instance.speed = currState == state.ONE_ARM ? 0.05f : 1f;
+            if (currState == state.TWO_ARMS)
+                FindObjectOfType<AudioManager>().Play("outsideWalk3");
+            else
+                FindObjectOfType<AudioManager>().Play("outsideWalk1");
             spriteRenderer.flipX = false;
 //        } else if (Input.GetAxisRaw("Horizontal") < 0) {
   //          player.velocity = new Vector2(-(int)currState, player.velocity.y);
@@ -66,7 +69,7 @@ public class PlayerController2D : MonoBehaviour
         anim.SetBool("TWO", currState == state.TWO_ARMS ? true : false);
         anim.SetBool("HUMAN", currState == state.HUMAN ? true : false);
         
-        SpeedP.instance.speed = 0f;
+//        SpeedP.instance.speed = 0f;
         if (Input.GetAxisRaw("Horizontal") > 0 && !fall)
             anim.SetBool("IsMoving", true);
    //     else if (Input.GetAxisRaw("Horizontal") < 0)
